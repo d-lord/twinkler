@@ -1,0 +1,30 @@
+/*
+ * NB: the JS on this component also does a lot of custom class definitions based on its contents
+ */
+pre {
+    font-size: 16px;
+}
+@media only screen and (max-device-width: 480px) {
+    body {
+        -webkit-text-size-adjust: 100%;
+    }
+}
+div.highlight {
+    /*margin: -1em 0;*/
+}
+
+button.startstop {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    width: 10rem;
+    height: 4rem;
+    font-size: 2em;
+}
+
+div.highlight > pre {
+    background-color: #303030;
+    padding: 2em;
+    color: white;
+    font-family: monospace;
+}
