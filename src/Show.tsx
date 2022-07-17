@@ -6,6 +6,7 @@ import 'highlight.js/styles/nord.css';
 export interface ShowProps {
     userCode: string
     onClickReturn: () => void
+    stylesheetId: string
 }
 
 interface ShowState {
@@ -47,7 +48,12 @@ export default class Show extends React.Component<ShowProps, ShowState> {
     }
 
     addStyle(styleString: string) {
+        const existingStyle = document.getElementById(this.props.stylesheetId);
+        if (existingStyle !== null) {
+            existingStyle.remove();
+        }
         const style = document.createElement('style');
+        style.id = this.props.stylesheetId;
         style.textContent = styleString;
         document.head.append(style);
       }
@@ -66,27 +72,7 @@ export default class Show extends React.Component<ShowProps, ShowState> {
 
         // pick out the highlight classes.
         // some classes get `color: inherit;` and we don't want to start modifying those, so filter them out
-        /*
-         * <pre>
-         *      hljs-meta
-         *          hljs-keyword
-         *      hljs-tag
-         *          (text node)
-         *          hljs-name
-         *          hljs-attr
-         *          hljs-string
-         *
-         * pre.children
-         *      .children
-         *
-         * naive approach:
-         * for child_level_1 in pre.children:
-         *      yield child_level_1
-         *      for child_level_2 in child_level_1.children:
-         *          yield child_level_2
-         *
-         *
-         */
+
         let allClasses = new Set<string>()
         for (let child_level_1 of pre.children) {
             allClasses.add(child_level_1.className)
@@ -109,7 +95,8 @@ export default class Show extends React.Component<ShowProps, ShowState> {
         const fullLen = secPerColour * colours.length;
         const extraStyle = [];
 
-        // edge case for the root
+        // some of the text is plain (eg brackets in lisp), but we want to highlight it too
+        // so: highlight the root too
         meaningfulClasses = ['hljs', ...meaningfulClasses];
 
         for (const className of meaningfulClasses) {
@@ -130,7 +117,7 @@ export default class Show extends React.Component<ShowProps, ShowState> {
             for (const [i, colour] of thisColours.entries()) {
                 const subPercentStart = i * subPercent;
                 const nextPercent = (i+1) * subPercent;
-                const start = i == 0 ? 'from' : `${subPercentStart*100}%`;
+                const start = i === 0 ? 'from' : `${subPercentStart*100}%`;
                 const first = subPercentStart + holdPercent;
                 const last = nextPercent - holdPercent;
                 const end = i == (thisColours.length - 1) ? 'to' : `${nextPercent*100}%`;

@@ -23,7 +23,7 @@ function App() {
   if (mode === Mode.form) {
     inner = <Form onClickGo={returnContent} userCode={userCode} />
   } else if (mode === Mode.show) {
-    inner = <Show onClickReturn={()=>switchModeTo(Mode.form)} userCode={userCode}/>
+    inner = <Show onClickReturn={()=>switchModeTo(Mode.form)} userCode={userCode} stylesheetId="yolo-shipit"/>
   }
 
   return (
