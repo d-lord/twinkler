@@ -2,6 +2,7 @@ import React from "react";
 import hljs from "highlight.js";
 import './Show.css';
 import 'highlight.js/styles/nord.css';
+import {Link} from "react-router-dom";
 
 export interface ShowProps {
     userCode: string
@@ -34,7 +35,7 @@ export default class Show extends React.Component<ShowProps, ShowState> {
     // so switched to a class for the explicit control over componentWillUnmount
     constructor(props: ShowProps) {
         super(props);
-        this.state = {currentlyAnimating: true, formattedCode: "<pre>You&apos;re fast</pre>", allClasses: []}
+        this.state = {currentlyAnimating: true, formattedCode: "", allClasses: []}
     }
 
     // https://stackoverflow.com/a/12646864
@@ -181,6 +182,14 @@ export default class Show extends React.Component<ShowProps, ShowState> {
     }
 
     render() {
+        if (this.props.userCode === "" || this.props.userCode === undefined) {
+            return (
+                <div className="show-lost">
+                <h1>Holy dooley!</h1>
+            <p>You've wandered into the wrong place.</p>
+        <Link to="/">Go back</Link>
+                    </div>)
+        }
         return (
             // dangerouslySetInnerHTML is OK if you trust hljs with user input, lol
             <div>

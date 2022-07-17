@@ -28,3 +28,18 @@ div.highlight > pre {
     color: white;
     font-family: monospace;
 }
+
+.show-lost {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    padding: 0 0 0.5em 0;
+    box-sizing: border-box;
+    flex-basis: auto;
+}
+
+.show-lost a {
+    margin-top: 0.3em;
+}
