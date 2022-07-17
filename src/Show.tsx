@@ -164,9 +164,6 @@ export default class Show extends React.Component<ShowProps, ShowState> {
         let extraStyle: string[] = [];
         const styleWasRemoved = this.maybeRemoveStyle(animationStateStylesheetId);
 
-        // if styleWasRemoved: OK, toggled off, let it stay removed
-        // if !styleWasRemoved: add it, unless 'always_off'
-
         if (!styleWasRemoved && !always_off) {
             // if it didn't exist, then add it, unless 'always_off'
             for (const cls of this.state.allClasses) {
