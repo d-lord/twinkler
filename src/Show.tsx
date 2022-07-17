@@ -10,9 +10,9 @@ export interface ShowProps {
 }
 
 interface ShowState {
-    timerId: number | null
     formattedCode: any | null
-    allClasses: string[] // all CSS classes to animate (eg "hljs-string")
+    allClasses: string[]        // all CSS classes to animate (eg "hljs-string")
+    currentlyAnimating: boolean // tracked as state so we can tell the StartStopButton; otherwise we'd have to query for the stylesheet every time
 }
 
 interface StartStopButtonProps {
@@ -32,7 +32,7 @@ export default class Show extends React.Component<ShowProps, ShowState> {
     // so switched to a class for the explicit control over componentWillUnmount
     constructor(props: ShowProps) {
         super(props);
-        this.state = {timerId: null, formattedCode: null, allClasses: []}
+        this.state = {currentlyAnimating: true, formattedCode: null, allClasses: []}
     }
 
     // https://stackoverflow.com/a/12646864
@@ -47,16 +47,28 @@ export default class Show extends React.Component<ShowProps, ShowState> {
         return array;
     }
 
-    addStyle(styleString: string) {
-        const existingStyle = document.getElementById(this.props.stylesheetId);
-        if (existingStyle !== null) {
-            existingStyle.remove();
-        }
+    addStyle(stylesheetId: string, styleString: string) {
+        /* Adds a stylesheet with id={styleSheetId} and value/contents {styleString}.
+        * If a stylesheet with that id exists, overwrites it. */
+        this.maybeRemoveStyle(stylesheetId);
         const style = document.createElement('style');
-        style.id = this.props.stylesheetId;
+        style.id = stylesheetId;
         style.textContent = styleString;
         document.head.append(style);
-      }
+    }
+
+    maybeRemoveStyle(stylesheetId: string): boolean {
+        /* If a <style id={stylesheetId}> exists, removes it.
+         * Nothing happens if it doesn't exist.
+         * Returns whether one was removed or not.
+         */
+        const existingStyle = document.getElementById(stylesheetId);
+        if (existingStyle !== null) {
+            existingStyle.remove();
+            return true;
+        }
+        return false;
+    }
 
     componentDidMount() {
         console.log(`Show.componentDidMount (state.formattedCode: ${this.state.formattedCode})`)
@@ -137,7 +149,7 @@ export default class Show extends React.Component<ShowProps, ShowState> {
             }
         }
 
-        this.addStyle(extraStyle.join('\n'));
+        this.addStyle(this.props.stylesheetId, extraStyle.join('\n'));
 
         // with this we can find how many CSS classes we need (hence how many colours) and implement change() to start swapping them
 
@@ -160,15 +172,23 @@ export default class Show extends React.Component<ShowProps, ShowState> {
     }
 
     toggle(always_off?: boolean) {
-        if (this.state.timerId !== null || always_off === true) {
-            if (this.state.timerId !== null) {
-                clearTimeout(this.state.timerId);
+        /* create a separate stylesheet for animation status */
+        const animationStateStylesheetId = 'animation-status';
+        let extraStyle: string[] = [];
+        const styleWasRemoved = this.maybeRemoveStyle(animationStateStylesheetId);
+
+        // if styleWasRemoved: OK, toggled off, let it stay removed
+        // if !styleWasRemoved: add it, unless 'always_off'
+
+        if (!styleWasRemoved && !always_off) {
+            // if it didn't exist, then add it, unless 'always_off'
+            for (const cls of this.state.allClasses) {
+                extraStyle.push(`.${cls} { animation-play-state: paused; }`)
             }
-            this.setState({timerId: null});
+            this.addStyle(animationStateStylesheetId, extraStyle.join('\n'));
+            this.setState((state, props) => {return {currentlyAnimating: false}});
         } else {
-            let timerId = setInterval(change, 500) as unknown as number; // this could go really badly but I think it's OK in theory... TS says it returns a NodeJS.Timer but that won't be right
-            this.setState({timerId: timerId});
-            change(); // do it right now, rather than waiting 500ms for the first one
+            this.setState((state, props) => {return {currentlyAnimating: true}});
         }
     }
 
@@ -186,7 +206,7 @@ export default class Show extends React.Component<ShowProps, ShowState> {
             <div>
                 <div className="highlight" dangerouslySetInnerHTML={{__html: this.state.formattedCode}} />
                 <button onClick={this.props.onClickReturn}>Go back</button>
-                <StartStopButton onClick={() => this.toggle()} currentlyAnimating={this.currentlyAnimating()}/>
+                <StartStopButton onClick={() => this.toggle()} currentlyAnimating={this.state.currentlyAnimating}/>
             </div>
         )
     }
