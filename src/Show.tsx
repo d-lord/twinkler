@@ -156,19 +156,6 @@ export default class Show extends React.Component<ShowProps, ShowState> {
         /* on mount: declare --span-tag: #999cba; */
 
         this.setState((state, props) => ({formattedCode: pre.outerHTML, allClasses: meaningfulClasses}))
-        this.toggle()
-    }
-
-    assignNewColorsToClasses() {
-        /* the things that happen CSS-wise need to be approximately:
-         * for each class created by hljs, give it a default colour (is this actually necessary?)
-         * ?
-         * create --span-name: #colour for each span
-         * ?
-         * shuffle colours and allocate them to hljs classes
-         * ?
-         * ... I'm out of brain juice but it's basically the stuff in twinkle_smart.(css|js), just done at a slightly different time as we can create CSS classes and dump them into document.styleSheets
-         */
     }
 
     toggle(always_off?: boolean) {
@@ -194,10 +181,6 @@ export default class Show extends React.Component<ShowProps, ShowState> {
 
     componentWillUnmount() {
         this.toggle(true)
-    }
-
-    currentlyAnimating() {
-        return this.state.timerId !== null;
     }
 
     render() {

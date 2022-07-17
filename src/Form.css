@@ -29,16 +29,6 @@ h1 {
     margin-bottom: 0.1em;
     margin-top: 0.2em;
     padding-inline: 0.2rem;
-    animation: twinkle linear 1.2s infinite;
-}
-
-@keyframes twinkle {
-    from {color: #0000c0}
-    15% {color: #0000c0}
-    35% {color: #9C1A1C}
-    65% {color: #9C1A1C}
-    85% {color: #0000c0}
-    to {color: #0000c0}
 }
 
 p {
