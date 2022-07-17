@@ -1,36 +1,19 @@
 import React, {useState} from 'react';
 import Form from './Form';
 import Show from './Show';
-
-enum Mode {
-  form,
-  show
-}
+import {Routes, Route, useNavigate} from "react-router-dom";
 
 function App() {
-  const [mode, setMode] = useState(Mode.form);
   const [userCode, setUserCode] = useState<string>("");
-  function switchModeTo(m: Mode) {
-    setMode(m);
-  }
-  function returnContent(code: string) {
-    setUserCode(code);
-    setMode(Mode.show);
-  }
+  const navigate = useNavigate();
+  function onCodeSubmitted(code: string) {setUserCode(code); navigate('/show')}
 
-  let inner;
-
-  if (mode === Mode.form) {
-    inner = <Form onClickGo={returnContent} userCode={userCode} />
-  } else if (mode === Mode.show) {
-    inner = <Show onClickReturn={()=>switchModeTo(Mode.form)} userCode={userCode} animationStylesheetId="code-animations"/>
-  }
-
-  return (
-    <div className="App">
-      {inner}
-    </div>
-  );
+    return (
+        <Routes>
+            <Route path="/" element={<Form codeWasSubmitted={onCodeSubmitted} userCode={userCode}/>}/>
+            <Route path="show" element={<Show userCode={userCode} animationStylesheetId="animations"/>}/>
+        </Routes>
+    );
 }
 
 export default App;

@@ -5,7 +5,6 @@ import 'highlight.js/styles/nord.css';
 
 export interface ShowProps {
     userCode: string
-    onClickReturn: () => void
     animationStylesheetId: string
 }
 
@@ -186,7 +185,6 @@ export default class Show extends React.Component<ShowProps, ShowState> {
             // dangerouslySetInnerHTML is OK if you trust hljs with user input, lol
             <div>
                 <div className="highlight" dangerouslySetInnerHTML={{__html: this.state.formattedCode}} />
-                <button onClick={this.props.onClickReturn}>Go back</button>
                 <StartStopButton onClick={() => this.toggle()} currentlyAnimating={this.state.currentlyAnimating}/>
             </div>
         )
