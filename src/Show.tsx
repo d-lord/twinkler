@@ -73,7 +73,6 @@ export default class Show extends React.Component<ShowProps, ShowState> {
     }
 
     componentDidMount() {
-        console.log(`Show.componentDidMount (state.formattedCode: ${this.state.formattedCode})`)
         const pre = document.createElement('pre')
         // if userCode is HTML like <html>, it must be escaped to &lt;html&gt; for hljs (even inside <pre> - because what if there were a </pre> inside?)
         // best way to do this seems to be getting the browser to do it
