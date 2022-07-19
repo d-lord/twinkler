@@ -132,7 +132,7 @@ export default class Show extends React.Component<ShowProps, ShowState> {
                 const start = i === 0 ? 'from' : `${subPercentStart*100}%`;
                 const first = subPercentStart + holdPercent;
                 const last = nextPercent - holdPercent;
-                const end = i == (thisColours.length - 1) ? 'to' : `${nextPercent*100}%`;
+                const end = i === (thisColours.length - 1) ? 'to' : `${nextPercent*100}%`;
                 keyframes.push(`${start} { color: ${colour}; }`)
             }
 
