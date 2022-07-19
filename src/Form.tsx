@@ -29,6 +29,12 @@ export default function Form(props: FormProps) {
         }
     }
 
+    function handleChangeInput(e: any) {
+        // this is needed to prevent the textarea from becoming read-only.
+        // if performance becomes a problem, consider debouncing or another option.
+       setUserCode(e.target.value ?? "");
+    }
+
     const [userCode, setUserCode] = useState<string>(props.userCode);
 
     return <form onSubmit={handleClickSubmit} id="form">
@@ -41,7 +47,7 @@ export default function Form(props: FormProps) {
             <button onClick={handleClickExample(example3)}>Example 3</button>
         </div>
         <textarea id="code" name="code" autoFocus spellCheck="false"
-                  value={userCode}
+                  defaultValue={userCode} onChange={handleChangeInput}
                   placeholder="# Don't put confidential code into text boxes on the internet" />
         <input type="submit" value="Submit"/>
     </form>
