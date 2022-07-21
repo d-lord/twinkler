@@ -20,10 +20,6 @@ textarea {
 textarea::placeholder {
     font-size: 1rem;
 }
-input[type="submit"] {
-    font-size: 0.7rem;
-    margin-top: 0.5rem;
-}
 
 h1 {
     margin-bottom: 0.1em;
@@ -31,18 +27,44 @@ h1 {
     padding-inline: 0.2rem;
 }
 
-p {
-    margin: 0 auto;
+h1:after {
+    content: "✨"
+}
+
+form p {
+    margin: 0.3rem auto;
     font-size: 1rem;
 }
-#examples {
+
+form #examples {
     display: flex;
-    margin: 0.3em auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-size: 1em;
+    width: 60%;
+    margin-inline: auto;
 }
-#examples button {
+
+form #examples button {
+    flex-grow: 1;
+    min-width: 5rem;
+    min-height: 1.5rem;
+    font-size: 1em;
     height: 2em;
     margin: 0 0.3em;
 }
+
+form #examples {
+    display: flex;
+    margin: 0.3em auto;
+}
+
+input[type="submit"] {
+    font-size: 1rem;
+    min-height: 1.5em;
+    min-width: 5rem;
+}
+
 a, a:visited {
     color: #f6f3e8;
 }
@@ -50,26 +72,56 @@ a, a:visited {
 /* mobile */
 @media only screen and (max-device-width: 850px) {
     html {
-        font-size: 50px;
+        /*font-size: 25px;*/
     }
-    h1 {
-        font-size: 2rem;
+    form {
+        height: 100dvh;
+    }
+    form h1 {
+        font-size: 1.5rem;
         padding-bottom: 0.4rem;
         width: 90%;
         margin-left: auto;
         margin-right: auto;
+        text-align: center;
     }
-    p {
-        font-size: 1rem;
+    form p {
+        font-size: 0.9rem;
         width: 90%;
         margin-left: auto;
         margin-right: auto;
     }
-    textarea {
+    form textarea {
         width: 90%;
         margin: 0 auto;
+        flex-grow: 1;
+        flex-shrink: 1;
+        font-size: 0.6em;
     }
-    textarea::placeholder {
+    form textarea::placeholder {
         font-size: 0.8rem;
+    }
+
+    form #examples button {
+        flex-grow: 1;
+        min-width: 5rem;
+        min-height: 1.5rem;
+        font-size: 1em;
+    }
+    form input[type='submit'] {
+        background-color: #303030;
+        color: #f6f3e8;
+        font-size: 1em;
+        min-height: 1.5rem;
+        min-width: 4rem;
+        position: absolute;
+        bottom: 0.7em;
+        right: 0.5em;
+    }
+    #theme-attribution {
+        display: none;
+    }
+    h1:after {
+        content: none;
     }
 }

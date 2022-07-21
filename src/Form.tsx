@@ -38,9 +38,7 @@ export default function Form(props: FormProps) {
     const [userCode, setUserCode] = useState<string>(props.userCode);
 
     return <form onSubmit={handleClickSubmit} id="form">
-        <label htmlFor="code"><h1>What code do you want to sparkle? ✨</h1></label>
-        <p>These colours come from the emacs <a
-            href="https://github.com/emacs-mirror/emacs/blob/master/etc/themes/wombat-theme.el">wombat</a> theme.</p>
+        <label htmlFor="code"><h1>What code do you want to sparkle?</h1></label>
         <div id="examples">
             <button onClick={handleClickExample(example1)}>Example 1</button>
             <button onClick={handleClickExample(example2)}>Example 2</button>
@@ -49,6 +47,8 @@ export default function Form(props: FormProps) {
         <textarea id="code" name="code" autoFocus spellCheck="false"
                   defaultValue={userCode} onChange={handleChangeInput}
                   placeholder="# Don't put confidential code into text boxes on the internet" />
+        <p id="theme-attribution">These colours come from the emacs <a
+            href="https://github.com/emacs-mirror/emacs/blob/master/etc/themes/wombat-theme.el">wombat</a> theme.</p>
         <input type="submit" value="Submit"/>
     </form>
 };

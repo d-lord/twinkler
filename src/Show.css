@@ -24,7 +24,7 @@ button.startstop {
 
 div.highlight > pre {
     background-color: #303030;
-    padding: 2em;
+    padding: 0 2em;
     color: white;
     font-family: monospace;
 }
@@ -42,4 +42,19 @@ div.highlight > pre {
 
 .show-lost a {
     margin-top: 0.3em;
+}
+
+/* mobile */
+@media only screen and (max-device-width: 850px) {
+    .show-lost p {
+        text-align: center;
+    }
+    button.startstop {
+        top: unset;
+        bottom: 1em;
+        right: 1em;
+        width: unset;
+        height: 1.5em;
+        font-size: 40px;
+    }
 }
