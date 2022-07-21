@@ -25,6 +25,7 @@ h1 {
     margin-bottom: 0.1em;
     margin-top: 0.2em;
     padding-inline: 0.2rem;
+    text-align: center;
 }
 
 h1:after {
@@ -83,7 +84,6 @@ a, a:visited {
         width: 90%;
         margin-left: auto;
         margin-right: auto;
-        text-align: center;
     }
     form p {
         font-size: 0.9rem;
