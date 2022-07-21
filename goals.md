@@ -8,6 +8,7 @@ Make it a simple SPA?
 load /, it renders the form
 type stuff in and hit submit, it stays on / but renders the show template
 
+restore ⌘+enter to submit the form
 
 it'd also be cool to have the 'go back' button animate back to the 'submit' button, if I'm keeping it
 
