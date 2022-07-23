@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Template script for deploying this to prod.
+# Two big caveats:
+# 1. I've probably forgotten to update this past the initial version because it's in .gitignore,
+#    so it may be heavily out of date
+# 2. Deleting the old build and then uploading the new build is kind of dangerous
+#    (what if your internet cuts out in between?), but fine for a tiny hobby project
+
+set -e
+
+bucket=MY.BUCKET.NAME
+prefix=twinkler
+distribution=MYCLOUDFRONTDISTRIBUTIONID
+
+npm run build
+rm build/.DS_Store
+aws s3 rm --recursive "s3://${bucket}/${prefix}/"
+aws s3 cp --recursive build "s3://${bucket}/${prefix}/"
+aws cloudfront create-invalidation --distribution-id "${distribution}" --paths "/${prefix}" "/${prefix}/*"

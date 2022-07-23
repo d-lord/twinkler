@@ -4,15 +4,7 @@ Animated code highlighting. [See it live at lord.geek.nz](https://lord.geek.nz/t
 
 ## Deployment
 
-It's built into one high-quality bundle and can be served statically. Deployment will look something like:
-
-``` sh
-npm run build
-aws s3 rm --recursive $bucket/$path
-aws s3 cp --recursive $bucket/$path
-# optionally, if behind cloudfront and you don't want to wait for it to expire from the cache:
-aws cloudfront create-invalidation --distribution-id $distro --paths "$path/*'
-```
+It's built into one neat bundle and can be served statically. See `deploy.sh.example` for more details. 
 
 ## Create-React-App stuff
 
