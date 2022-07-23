@@ -7,14 +7,11 @@ import {Routes, Route, useNavigate} from "react-router-dom";
 function App() {
   const [userCode, setUserCode] = useState<string>("");
   const navigate = useNavigate();
-  function onCodeSubmitted(code: string) {
-      setUserCode(code);
-      navigate('/show');
-  }
+  function onCodeSubmitted() {navigate('/show')}
 
     return (
         <Routes>
-            <Route path="/" element={<Form codeWasSubmitted={onCodeSubmitted} userCode={userCode}/>}/>
+            <Route path="/" element={<Form codeWasSubmitted={onCodeSubmitted} userCode={userCode} onUserCodeChange={setUserCode}/>}/>
             <Route path="show" element={<Show userCode={userCode} animationStylesheetId="animations"/>}/>
         </Routes>
         /* something to note about routes: Cloudfront is configured to redirect stuff that looks like a route back to the root of the app.
