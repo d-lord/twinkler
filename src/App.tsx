@@ -7,7 +7,10 @@ import {Routes, Route, useNavigate} from "react-router-dom";
 function App() {
   const [userCode, setUserCode] = useState<string>("");
   const navigate = useNavigate();
-  function onCodeSubmitted(code: string) {setUserCode(code); navigate('/show')}
+  function onCodeSubmitted(code: string) {
+      setUserCode(code);
+      navigate('/show');
+  }
 
     return (
         <Routes>
