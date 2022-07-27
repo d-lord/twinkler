@@ -35,6 +35,15 @@ export default function Form(props: FormProps) {
         }
     }
 
+    function checkSubmitHotkeys(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+        if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+            handleClickSubmit(e);
+            // you can't simply submit the corresponding form, and I don't know why
+            // ie: no e.target.form.submit()
+            // it seems to not fire the form's onSubmit event - maybe React doesn't intercept it
+        }
+    }
+
     return <form onSubmit={handleClickSubmit} id="form">
         <label htmlFor="code"><h1>What code do you want to sparkle?</h1></label>
         <div id="examples">
@@ -45,7 +54,8 @@ export default function Form(props: FormProps) {
         <textarea id="code" name="code" autoFocus spellCheck="false"
                   value={props.userCode}
                   onChange={(e) => {props.onUserCodeChange(e.target.value)}}
-                  placeholder="# Don't put confidential code into text boxes on the internet" />
+                  placeholder="# Don't put confidential code into text boxes on the internet"
+                  onKeyDown={checkSubmitHotkeys} />
         <p id="theme-attribution">These colours come from the emacs <a
             href="https://github.com/emacs-mirror/emacs/blob/master/etc/themes/wombat-theme.el">wombat</a> theme.</p>
         <input type="submit" value="Submit"/>
